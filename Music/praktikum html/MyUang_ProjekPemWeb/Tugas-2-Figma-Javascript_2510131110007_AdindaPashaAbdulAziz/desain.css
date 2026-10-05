@@ -1,0 +1,1031 @@
+/* Pengaturan dasar */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #f4f4f5;
+    --surface: #ffffff;
+    --text: #18181b;
+    --muted: #777982;
+    --border: #a0a0a7;
+    --line: #e6e6e9;
+    --purple: #6053f4;
+    --cyan: #08c2df;
+    --red: #ff4b55;
+    --green: #36c765;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #202020;
+    color: var(--text);
+    font-size: 13px;
+    min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+/* Tombol */
+.primary,
+.secondary,
+.danger {
+    border-radius: 9px;
+    padding: 10px 14px;
+    border: 1px solid transparent;
+    font-size: 11px;
+}
+
+.primary {
+    background: var(--purple);
+    color: #ffffff;
+}
+
+.primary:hover {
+    opacity: 0.9;
+}
+
+.secondary {
+    background: var(--surface);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.danger {
+    background: #fff0f0;
+    color: #c52c35;
+    border-color: #ffcaca;
+}
+
+.full {
+    width: 100%;
+}
+
+/* Halaman login */
+.login-screen {
+    min-height: 100vh;
+    margin: 27px 12px 12px;
+    background: var(--bg);
+    display: grid;
+    place-items: center;
+    padding: 20px;
+}
+
+.login-card {
+    width: min(100%, 420px);
+    padding: 28px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    display: grid;
+    gap: 9px;
+}
+
+.login-card h1 {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.center {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.login-card label,
+.form-panel label,
+.help-panel label {
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.login-card input {
+    border: 0;
+    border-bottom: 1px solid #888;
+    border-radius: 0;
+    padding: 9px 4px;
+    margin-bottom: 7px;
+    background: transparent;
+    color: var(--text);
+    outline-color: var(--purple);
+}
+
+.hint {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.login-card .primary,
+.login-card .secondary {
+    max-width: 220px;
+    width: 100%;
+    justify-self: center;
+    margin-top: 3px;
+    padding: 9px;
+}
+
+/* Layout web */
+.app {
+    display: flex;
+    gap: 12px;
+    min-height: calc(100vh - 38px);
+    margin: 26px 12px 12px;
+    padding: 13px;
+    background: #f3f3f4;
+}
+
+.sidebar {
+    width: 170px;
+    flex: 0 0 170px;
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 14px 9px;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 64px);
+}
+
+.brand {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 1px 8px 21px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.brand img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+.brand b {
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 1px 3px;
+}
+
+.side-label {
+    font-size: 10px;
+    margin: 0 8px 12px;
+}
+
+.general {
+    margin-top: 29px;
+}
+
+.sidebar nav {
+    display: grid;
+    gap: 4px;
+}
+
+.nav {
+    border: 0;
+    background: transparent;
+    text-align: left;
+    color: var(--text);
+    font-size: 10px;
+    padding: 10px 7px;
+    border-radius: 7px;
+}
+
+.nav:hover,
+.nav.active {
+    background: #eeeaff;
+    color: var(--purple);
+}
+
+.logout {
+    margin-top: auto;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 9px;
+    background: transparent;
+    color: var(--text);
+    font-size: 10px;
+}
+
+.main {
+    flex: 1;
+    min-width: 0;
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 18px 16px 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.topbar h1 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.search {
+    position: relative;
+    width: 130px;
+    height: 30px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 9px;
+}
+
+.search input {
+    border: 0;
+    padding: 4px 0;
+    background: transparent;
+    color: var(--text);
+    min-width: 0;
+    width: 100%;
+    font-size: 9px;
+    outline: 0;
+}
+
+.circle,
+.mobile-menu {
+    height: 30px;
+    width: 30px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text);
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+.suggestions {
+    position: absolute;
+    top: 36px;
+    right: 0;
+    width: 185px;
+    padding: 5px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    box-shadow: 0 10px 25px #0001;
+    z-index: 10;
+}
+
+.suggestion {
+    display: block;
+    width: 100%;
+    padding: 9px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text);
+    text-align: left;
+    font-size: 11px;
+}
+
+.suggestion:hover {
+    background: #eeeaff;
+}
+
+/* Ringkasan */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9px;
+    margin-bottom: 17px;
+}
+
+.stat {
+    border: 1px solid var(--border);
+    border-top: 6px solid;
+    border-radius: 13px;
+    padding: 10px;
+    min-height: 84px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.stat span {
+    font-size: 9px;
+}
+
+.stat strong {
+    font-size: 15px;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+.stat small {
+    font-size: 9px;
+    color: var(--muted);
+}
+
+.cyan {
+    border-top-color: var(--cyan);
+}
+
+.red {
+    border-top-color: var(--red);
+}
+
+.purple {
+    border-top-color: var(--purple);
+}
+
+.green {
+    border-top-color: var(--green);
+}
+
+/* Dashboard */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.85fr) minmax(185px, 0.9fr);
+    gap: 16px;
+}
+
+.main-col,
+.side-col {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+    min-width: 0;
+}
+
+.panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 15px;
+    min-width: 0;
+}
+
+.panel h2 {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.panel-head p,
+.panel > p {
+    margin-top: 4px;
+}
+
+.chart-controls {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex-wrap: wrap;
+    font-size: 9px;
+    color: var(--muted);
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.cyan-bg {
+    background: var(--cyan);
+}
+
+.red-bg {
+    background: var(--red);
+}
+
+.chart-box {
+    height: 155px;
+    position: relative;
+}
+
+.donut-box {
+    height: 175px;
+    position: relative;
+}
+
+.category-summary {
+    display: grid;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.category-summary div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 9px;
+}
+
+.category-summary b {
+    color: var(--text);
+    font-weight: 500;
+}
+
+.text-btn {
+    border: 0;
+    background: transparent;
+    color: var(--purple);
+    font-size: 10px;
+}
+
+/* Tabel transaksi */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9px;
+    min-width: 460px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    width: 100%;
+}
+
+th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--muted);
+    padding: 7px 5px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+td {
+    padding: 7px 5px;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+}
+
+.type {
+    display: inline-block;
+    padding: 4px 6px;
+    border-radius: 5px;
+    font-size: 9px;
+}
+
+.income {
+    color: #159b60;
+    background: #e4f8ed;
+}
+
+.expense {
+    color: #c7444b;
+    background: #fff0f0;
+}
+
+.amount-income {
+    color: #159b60;
+}
+
+.amount-expense {
+    color: #cf414a;
+}
+
+.empty {
+    padding: 22px;
+    text-align: center;
+    color: var(--muted);
+    white-space: normal;
+}
+
+.delete {
+    padding: 5px 8px;
+    border: 1px solid #ffcaca;
+    border-radius: 6px;
+    background: #fff0f0;
+    color: #c52c35;
+    font-size: 9px;
+}
+
+.note {
+    margin-top: 12px;
+}
+
+/* Saldo */
+.balance > strong {
+    display: block;
+    font-size: 22px;
+    margin: 14px 0;
+    overflow-wrap: anywhere;
+}
+
+.progress {
+    height: 7px;
+    border-radius: 10px;
+    background: var(--line);
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.progress span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--green);
+}
+
+.balance small {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.balance .primary {
+    font-size: 10px;
+}
+
+/* Form transaksi */
+.form-wrap {
+    display: grid;
+    place-items: start center;
+    padding: 15px 0;
+}
+
+.form-panel {
+    width: min(100%, 480px);
+    padding: 20px;
+}
+
+.form-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.form-heading p {
+    margin-top: 4px;
+}
+
+.back {
+    width: 30px;
+    height: 30px;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+}
+
+.form-panel form,
+.help-panel form {
+    display: grid;
+    gap: 8px;
+}
+
+.form-panel input,
+.form-panel select,
+.help-panel select,
+.help-panel textarea {
+    padding: 10px;
+    font-size: 11px;
+}
+
+.form-panel input,
+.form-panel select,
+.help-panel select,
+.help-panel textarea,
+.target-input input {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+}
+
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.two-col > div {
+    display: grid;
+    gap: 8px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.form-actions button {
+    min-width: 95px;
+}
+
+/* Halaman Analisis */
+.analysis-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.analysis-stats strong {
+    display: block;
+    font-size: 18px;
+    margin-top: 9px;
+    overflow-wrap: anywhere;
+}
+
+.analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.analysis-grid .panel {
+    padding: 15px;
+}
+
+.analysis-chart {
+    height: 205px;
+    position: relative;
+    margin-top: 12px;
+}
+
+/* Halaman Pengaturan */
+.settings {
+    padding: 20px;
+}
+
+.settings > p {
+    margin: 5px 0 10px;
+}
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+}
+
+.setting-row b {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.setting-row p {
+    margin: 5px 0;
+}
+
+.profile-large {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #eeeaff;
+    color: var(--purple);
+    font-size: 12px;
+}
+
+.switch {
+    position: relative;
+    width: 42px;
+    height: 23px;
+    flex-shrink: 0;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch span {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: #ccc;
+    cursor: pointer;
+}
+
+.switch span::before {
+    content: "";
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    left: 3px;
+    top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.switch input:checked + span {
+    background: var(--purple);
+}
+
+.switch input:checked + span::before {
+    transform: translateX(19px);
+}
+
+.target-input {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 300px;
+}
+
+.target-input span {
+    font-size: 10px;
+}
+
+.target-input input {
+    width: 110px;
+    padding: 8px;
+    font-size: 10px;
+}
+
+.target-input button {
+    padding: 8px;
+    font-size: 10px;
+}
+
+/* Halaman Pusat Bantuan */
+.help-panel {
+    width: min(100%, 520px);
+    padding: 24px;
+}
+
+.help-panel > p {
+    margin: 10px 0 20px;
+}
+
+.help-panel textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Footer */
+.footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 25px 0 2px;
+}
+
+/* mode gelap */
+body.dark {
+    --bg: #191a20;
+    --surface: #24252c;
+    --text: #f1f1f4;
+    --muted: #a4a6b0;
+    --border: #4b4d57;
+    --line: #393b44;
+    background: #111111;
+}
+
+body.dark .app {
+    background: #191a20;
+}
+
+body.dark .login-screen {
+    background: #191a20;
+}
+
+body.dark .nav:hover,
+body.dark .nav.active {
+    background: #353044;
+}
+
+body.dark .income {
+    background: #173b2b;
+    color: #76e3ad;
+}
+
+body.dark .expense {
+    background: #45262b;
+    color: #ff9ca2;
+}
+
+body.dark .danger,
+body.dark .delete {
+    background: #49272b;
+    border-color: #69383d;
+    color: #ffadb2;
+}
+
+body.dark .suggestion:hover {
+    background: #353044;
+}
+
+/* Laptop */
+@media (min-width: 1300px) {
+    .app {
+        max-width: 1700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .main {
+        padding: 22px;
+    }
+
+    .chart-box {
+        height: 180px;
+    }
+
+    .donut-box {
+        height: 195px;
+    }
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .side-col {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .donut-box {
+        height: 145px;
+    }
+}
+
+/* hp */
+@media (max-width: 650px) {
+    .app {
+        margin: 8px 6px 6px;
+        padding: 7px;
+        min-height: calc(100vh - 14px);
+    }
+
+    .sidebar {
+        position: fixed;
+        z-index: 20;
+        top: 8px;
+        bottom: 8px;
+        left: 6px;
+        width: 205px;
+        transform: translateX(-120%);
+        transition: transform 0.2s;
+        box-shadow: 0 12px 35px #0003;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main {
+        padding: 14px 10px;
+    }
+
+    .mobile-menu {
+        display: grid;
+        flex-shrink: 0;
+    }
+
+    .topbar {
+        align-items: flex-start;
+        gap: 7px;
+    }
+
+    .topbar h1 {
+        font-size: 13px;
+    }
+
+    .top-actions {
+        gap: 5px;
+    }
+
+    .search {
+        width: 105px;
+    }
+
+    .circle {
+        flex-shrink: 0;
+    }
+
+    .stats {
+        gap: 7px;
+    }
+
+    .stat {
+        padding: 9px;
+        min-height: 82px;
+    }
+
+    .stat strong {
+        font-size: 13px;
+    }
+
+    .side-col {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-box {
+        height: 175px;
+    }
+
+    .analysis-stats,
+    .analysis-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .analysis-chart {
+        height: 220px;
+    }
+
+    .two-col {
+        grid-template-columns: 1fr;
+    }
+
+    .setting-row {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .target-input {
+        width: 100%;
+        max-width: none;
+    }
+
+    .target-input input {
+        flex: 1;
+    }
+
+    .form-wrap {
+        padding: 5px 0;
+    }
+
+    .form-panel,
+    .help-panel {
+        padding: 17px;
+    }
+
+    .panel-head {
+        align-items: flex-start;
+    }
+
+    .login-screen {
+        margin: 10px 6px 6px;
+        padding: 16px;
+    }
+
+    .login-card {
+        padding: 25px 19px;
+    }
+}

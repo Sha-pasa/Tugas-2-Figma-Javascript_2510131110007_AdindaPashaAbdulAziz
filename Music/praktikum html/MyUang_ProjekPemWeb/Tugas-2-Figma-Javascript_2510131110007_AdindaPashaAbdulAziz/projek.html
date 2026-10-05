@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Uang - Dashboard Keuangan Pribadi</title>
+    <link rel="stylesheet" href="desain.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- tampilan pertama dimulai dari halaman login -->
+    <section id="loginScreen" class="login-screen">
+        <form id="loginForm" class="login-card">
+            <h1>Masuk</h1>
+            <p class="muted center">Selamat datang di My Uang</p>
+
+            <label for="email">Email</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="nama@email.com"
+                required>
+
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                placeholder="Masukkan password"
+                required>
+
+            <button type="submit" class="primary full">Log in</button>
+            <button type="button" id="signIn" class="secondary full">
+                Sign in
+            </button>
+        </form>
+    </section>
+
+    <!-- setelah login lanjut ke halaman website -->
+    <div id="app" class="app hidden">
+        <!-- sidebar nav -->
+        <aside class="sidebar" id="sidebar">
+            <a class="brand" href="#" data-page="dashboard">
+                <img src="money.png" alt="logo uang"><span>My Uang</span>
+            </a>
+            <p class="side-label">Menu</p>
+
+            <nav>
+                <button class="nav active" data-page="dashboard">
+                    <img src="home.png" alt="Halaman Utama">
+                    <span>Halaman Utama</span>
+                </button>
+
+                <button class="nav" data-page="transactions">
+                    <img src="transaksi.png" alt="Transaksi">
+                    <span>Transaksi</span>
+                </button>
+
+                <button class="nav" data-page="analysis">
+                    <img src="analisis.png" alt="Analisis">
+                    <span>Analisis</span>
+                </button>
+            </nav>
+
+            <p class="side-label general">General</p>
+            <nav>
+                <button class="nav" data-page="settings">
+                    <img src="setting.png" alt="Pengaturan">
+                    <span>Pengaturan</span>
+                </button>
+
+                <button class="nav" data-page="help">
+                    <img src="bantuan.png" alt="Pusat Bantuan">
+                    <span>Pusat Bantuan</span>
+                </button>
+            </nav>
+
+            <button id="logout" class="logout">
+                ↪ &nbsp; Log out
+            </button>
+        </aside>
+
+        <!-- konten -->
+        <main class="main">
+            <!-- header -->
+            <header class="topbar">
+                <button id="mobileMenu" class="mobile-menu">
+                    ☰
+                </button>
+
+                <div>
+                    <h1 id="heading">Selamat Datang</h1>
+                    <p id="subheading" class="muted">
+                        Ringkasan keuangan pribadimu.
+                    </p>
+                </div>
+
+                <div class="top-actions">
+                    <div class="search">
+                        <span>⌕</span>
+
+                        <input
+                            type="text"
+                            id="menuSearch"
+                            placeholder="Search menu"
+                            autocomplete="off">
+
+                        <div id="suggestions" class="suggestions hidden"></div>
+                    </div>
+
+                    <button id="theme" class="circle" title="Mode gelap">
+                        ☾
+                    </button>
+
+                    <button id="profile" class="circle" title="Profil">
+                        NM
+                    </button>
+                </div>
+            </header>
+
+            <!-- halaman web -->
+            <section id="page-dashboard" class="page">
+                <!-- ini ringkasan data uangnya -->
+                <div class="stats">
+
+                    <article class="stat cyan">
+                        <span>Total Pemasukan</span>
+                        <strong id="income">Rp 0</strong>
+                        <small>Catatan Pemasukan</small>
+                    </article>
+
+                    <article class="stat red">
+                        <span>Total Pengeluaran</span>
+                        <strong id="expense">Rp 0</strong>
+                        <small>Catatan Pengeluaran</small>
+                    </article>
+
+                    <article class="stat purple">
+                        <span>Target</span>
+                        <strong id="targetDisplay">Rp 2.000.000</strong>
+                        <small>Target tabungan bulanan</small>
+                    </article>
+
+                    <article class="stat green">
+                        <span>Tabungan</span>
+                        <strong id="savings">Rp 0</strong>
+                        <small>Saldo Tabungan</small>
+                    </article>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="main-col">
+                        <!-- grafik aset -->
+                        <article class="panel">
+
+                            <div class="panel-head">
+                                <div>
+                                    <h2>Ringkasan Aset Saya</h2>
+                                    <p class="muted">
+                                        Diagram pemasukan dan pengeluaran
+                                    </p>
+                                </div>
+
+                                <div class="chart-controls">
+                                    <span>
+                                        <i class="dot cyan-bg"></i> Income
+                                    </span>
+                                    <span>
+                                        <i class="dot red-bg"></i> Expense
+                                    </span>
+
+                                    <select id="period">
+                                        <option value="month">Bulan</option>
+                                        <option value="week">Minggu</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="chart-box">
+                                <canvas id="assetsChart"></canvas>
+                            </div>
+                        </article>
+
+                        <!-- data transaksi -->
+                        <article class="panel">
+                            <div class="panel-head">
+                                <div>
+                                    <h2>Transaksi Terbaru</h2>
+                                    <p class="muted">
+                                        Aktivitas keuangan terakhir
+                                    </p>
+                                </div>
+
+                                <button class="text-btn" data-page="transactions">
+                                    Lihat semua
+                                </button>
+                            </div>
+
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Date</th>
+                                            <th>Category</th>
+                                            <th>Type</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="recentRows"></tbody>
+                                </table>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="side-col">
+
+                        <!-- grafik kategori -->
+                        <article class="panel">
+                            <div class="panel-head">
+                                <div>
+                                    <h2>Ringkasan Pengeluaran</h2>
+                                    <p class="muted">
+                                        Berdasarkan kategori
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="donut-box">
+                                <canvas id="categoryChart"></canvas>
+                            </div>
+
+                            <div id="categorySummary" class="category-summary"></div>
+                        </article>
+
+                        <!-- saldo -->
+                        <article class="panel balance">
+                            <h2>Saldo Saat Ini</h2>
+                            <p class="muted">
+                                Perkiraan saldo dari transaksi
+                            </p>
+                            <strong id="balance">Rp 0</strong>
+
+                            <div class="progress">
+                                <span id="progress"></span>
+                            </div>
+
+                            <small id="progressLabel" class="muted">
+                                0% dari target
+                            </small>
+
+                            <button class="primary full" data-page="addTransaction">
+                                ＋ Tambah Transaksi
+                            </button>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- halaman transaksi (isinya ada riwayat transaksi dan tambah transaksi) -->
+            <section id="page-transactions" class="page hidden">
+                <article class="panel">
+
+                    <div class="panel-head">
+                        <div>
+                            <h2>Riwayat Transaksi</h2>
+                            <p class="muted">
+                                Semua pemasukan dan pengeluaranmu
+                            </p>
+                        </div>
+
+                        <button class="primary" data-page="addTransaction">
+                            ＋ Tambah Transaksi
+                        </button>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Category</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="allRows"></tbody>
+                        </table>
+                    </div>
+                </article>
+            </section>
+
+            <!-- tambah transaksi -->
+            <section id="page-addTransaction" class="page hidden">
+                <div class="form-wrap">
+                    <article class="panel form-panel">
+
+                        <div class="form-heading">
+                            <button class="back" data-page="transactions">
+                                ←
+                            </button>
+
+                            <div>
+                                <h2>Tambah Transaksi</h2>
+                                <p class="muted">
+                                    Catat pemasukan atau pengeluaran baru.
+                                </p>
+                            </div>
+                        </div>
+
+                        <form id="transactionForm">
+                            <label for="txName">Nama Transaksi</label>
+                            <input
+                                type="text"
+                                id="txName"
+                                required
+                                maxlength="80"
+                                placeholder="Contoh: Makan siang">
+
+                            <div class="two-col">
+                                <div>
+                                    <label for="txAmount">Jumlah (Rp)</label>
+                                    <input
+                                        type="number"
+                                        id="txAmount"
+                                        min="1"
+                                        required
+                                        placeholder="50000">
+                                </div>
+
+                                <div>
+                                    <label for="txType">Jenis</label>
+                                    <select id="txType">
+                                        <option value="expense">Pengeluaran</option>
+                                        <option value="income">Pemasukan</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <label for="txCategory">Kategori</label>
+                            <select id="txCategory">
+                                <option>Makanan</option>
+                                <option>Belanja</option>
+                                <option>Gaji</option>
+                            </select>
+
+                            <label for="txDate">Tanggal</label>
+                            <input type="date" id="txDate" required>
+
+                            <div class="form-actions">
+                                <button
+                                    type="button"
+                                    class="secondary"
+                                    data-page="transactions">
+                                    Batal
+                                </button>
+
+                                <button type="submit" class="primary">
+                                    Simpan Transaksi
+                                </button>
+                            </div>
+                        </form>
+                    </article>
+                </div>
+            </section>
+
+            <!-- halaman analisis -->
+            <section id="page-analysis" class="page hidden">
+                <div class="analysis-stats">
+
+                    <article class="panel">
+                        <span class="muted">Total transaksi</span>
+                        <strong id="analysisCount">0</strong>
+                    </article>
+
+                    <article class="panel">
+                        <span class="muted">Rata-rata transaksi</span>
+                        <strong id="analysisAverage">Rp 0</strong>
+                    </article>
+
+                    <article class="panel">
+                        <span class="muted">Rasio tabungan</span>
+                        <strong id="analysisRatio">0%</strong>
+                    </article>
+                </div>
+
+                <div class="analysis-grid">
+                    <article class="panel">
+                        <h2>Arus Keuangan</h2>
+                        <p class="muted">Total pemasukan dan pengeluaran</p>
+
+                        <div class="analysis-chart">
+                            <canvas id="flowChart"></canvas>
+                        </div>
+                    </article>
+
+                    <article class="panel">
+                        <h2>Komposisi Transaksi</h2>
+                        <p class="muted">Pemasukan dibanding pengeluaran</p>
+
+                        <div class="analysis-chart">
+                            <canvas id="typeChart"></canvas>
+                        </div>
+                    </article>
+
+                    <article class="panel">
+                        <h2>Pengeluaran per Kategori</h2>
+                        <p class="muted">Distribusi pengeluaran</p>
+
+                        <div class="analysis-chart">
+                            <canvas id="expenseChart"></canvas>
+                        </div>
+                    </article>
+
+                    <article class="panel">
+                        <h2>Jumlah Transaksi</h2>
+                        <p class="muted">Jumlah catatan menurut jenis</p>
+
+                        <div class="analysis-chart">
+                            <canvas id="countChart"></canvas>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- HALAMAN PENGATURAN -->
+            <section id="page-settings" class="page hidden">
+
+                <article class="panel settings">
+
+                    <h2>Pengaturan</h2>
+                    <p class="muted">
+                        Atur preferensi aplikasi My Uang.
+                    </p>
+
+                    <div class="setting-row">
+                        <div>
+                            <b>Profil</b>
+                            <p class="muted">
+                                Nama tampilan diambil dari email saat login.
+                            </p>
+                            <small id="settingEmail"></small>
+                        </div>
+
+                        <span id="settingInitials" class="profile-large">NM</span>
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <b>Mode gelap</b>
+                            <p class="muted">
+                                Terapkan tema ke seluruh halaman.
+                            </p>
+                        </div>
+
+                        <label class="switch">
+                            <input type="checkbox" id="darkSetting">
+                            <span></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <b>Target tabungan bulanan</b>
+                            <p class="muted">
+                                Atur target yang ditampilkan di dashboard.
+                            </p>
+                        </div>
+
+                        <div class="target-input">
+                            <span>Rp</span>
+                            <input
+                                type="number"
+                                id="targetInput"
+                                min="0"
+                                value="2000000"
+                            >
+                            <button id="saveTarget" class="primary">
+                                Simpan
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="setting-row">
+                        <div>
+                            <b>Data keuangan</b>
+                            <p class="muted">
+                                Hapus seluruh riwayat transaksi.
+                            </p>
+                        </div>
+
+                        <button id="clearData" class="danger">
+                            Hapus data
+                        </button>
+                    </div>
+
+                </article>
+            </section>
+
+            <!-- halaman pusat bantuan -->
+            <section id="page-help" class="page hidden">
+                <div class="form-wrap">
+                    <article class="panel help-panel">
+                        <h2>Pusat Bantuan</h2>
+
+                        <p class="muted">
+                            Kami siap membantu Anda memaksimalkan penggunaan
+                            My Uang. Sampaikan kendala atau pertanyaanmu
+                            melalui formulir berikut.
+                        </p>
+
+                        <form id="helpForm">
+                            <label for="helpTopic">Topik bantuan</label>
+
+                            <select id="helpTopic">
+                                <option>Masalah akun</option>
+                                <option>Transaksi</option>
+                                <option>Grafik dan analisis</option>
+                                <option>Lainnya</option>
+                            </select>
+
+                            <label for="helpMessage">
+                                Beritahu kami masalah Anda
+                            </label>
+
+                            <textarea
+                                id="helpMessage"
+                                rows="6"
+                                required
+                                maxlength="1000"
+                                placeholder="Tuliskan pesan atau pertanyaanmu..."
+                            ></textarea>
+
+                            <button type="submit" class="primary full">
+                                Submit
+                            </button>
+                        </form>
+                    </article>
+                </div>
+            </section>
+
+            <footer class="footer muted">
+                My Uang · Dashboard Keuangan Pribadi
+            </footer>
+        </main>
+    </div>
+
+    <script src="my_uang.js"></script>
+</body>
+</html>
